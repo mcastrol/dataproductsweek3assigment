@@ -1,0 +1,37 @@
+---
+title: "Data Product Week 3 Assignment"
+author: "Marcela Castro León"
+date: "April 15, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+library(plotly)
+```
+
+## Price by lenght and cut (scatterplot)
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plot_ly(diamonds, x=diamonds$x, y=diamonds$price, color=diamonds$cut, mode="markers")
+```
+
+## Price by lenght and color (scatterplot)
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plot_ly(diamonds, x=diamonds$x, y=diamonds$price, color=diamonds$color,mode="markers")
+```
+
+## Boxplot of Price by cut 
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plot_ly(diamonds, y=diamonds$price, color=diamonds$cut, type="box")
+```
+
+## Boxplot of Price by color
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plot_ly(diamonds, y=diamonds$price, color=diamonds$color,type="box")
+```
+

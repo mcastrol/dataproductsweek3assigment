@@ -1,0 +1,116 @@
+---
+title: "plotly Practice"
+author: "Marcela Castro León"
+date: "April 15, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+library(plotly)
+library(tidyr)
+library(dplyr)
+
+```
+
+## Basic scatterplot
+
+Basic scatterplot: use mode = "markers"
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+plot_ly(mtcars, x=mtcars$wt,y=mtcars$mpg, mode="markers")
+```
+
+## Add colors
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+plot_ly(mtcars, x=mtcars$wt,y=mtcars$mpg, mode="markers", color=as.factor(mtcars$cyl))
+```
+
+## add continuous colors
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+plot_ly(mtcars, x=mtcars$wt,y=mtcars$mpg, mode="markers", color=mtcars$disp)
+```
+
+## change point 
+
+Use variable hp to show the point
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+plot_ly(mtcars, x=mtcars$wt,y=mtcars$mpg, mode="markers", color=as.factor(mtcars$cyl),size=mtcars$hp)
+```
+
+## 3D Scaterplot
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+set.seed(2016-07-21)
+temp <- rnorm(100, mean=30, sd=5)
+pressue <- rnorm(100)
+dtime <- 1:100
+plot_ly(x = temp, y=pressue, z=dtime, type="scatter3d", mode="markers", color=temp)
+```
+
+## Time series
+
+Ploting a time series dataset airmiles (see time(airmiles)) 
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+data("airmiles")
+plot_ly(x=time(airmiles), y=airmiles, mode="lines")
+```
+
+## Multi lIne graphs
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+data("EuStockMarkets")
+stock <- as.data.frame(EuStockMarkets) %>% 
+    gather(index, price) %>% 
+    mutate(time = rep(time(EuStockMarkets),4))
+plot_ly(stock, x = stock$time, y=stock$price, color=stock$index)
+```
+
+## Histogram
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+plot_ly(x = precip, type="histogram")
+```
+
+## Boxplot
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+plot_ly(iris, y = iris$Petal.Length, color=iris$Species, type= "box")
+```
+
+## Heatmap
+Are useful for displaying three dimensional data in two dimensions, 
+using color for the third dimension,
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+terrain1 <- matrix(rnorm(100*100),nrow=100, ncol=100)
+plot_ly(z=terrain1, type= "heatmap")
+```
+
+
+## Surface 
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+terrain2 <- matrix(sort(rnorm(100*100)),nrow=100, ncol=100)
+plot_ly(z=terrain2, type= "surface")
+```
+
+
+## Choroplet map
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+state_pop <- data.frame(State=state.abb, Pop=as.vector(state.x77[,1]))
+state_pop$hover <- with(state_pop, paste(State,'<br>',"Population:", Pop))
+borders <- list(color = toRGB("red"))
+map_options <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+plot_ly(state_pop, z=state_pop$Pop, text = state_pop$hover, locations = state_pop$State, type= 'choropleth', locationmode = 'USA states', color=state_pop$Pop, colors= 'Blues', marker=list(line=borders)) %>% layout(title='US Population in 1975', geo=map_options)
+```
+
+
