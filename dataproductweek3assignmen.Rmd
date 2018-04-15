@@ -11,27 +11,18 @@ library(ggplot2)
 library(plotly)
 ```
 
-## Price by lenght and cut (scatterplot)
 
-```{r, warning=FALSE, message=FALSE, echo=TRUE, eval=FALSE}
-plot_ly(diamonds, x=diamonds$x, y=diamonds$price, color=diamonds$cut, mode="markers")
-```
-
-## Price by lenght and color (scatterplot)
-
-```{r, warning=FALSE, message=FALSE, echo=TRUE, eval=FALSE}
-plot_ly(diamonds, x=diamonds$x, y=diamonds$price, color=diamonds$color,mode="markers")
-```
-
-## Boxplot of Price by cut 
+## Diamant price by cut 
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
+format(Sys.time(), "%a %b %d %X %Y")
 plot_ly(diamonds, y=diamonds$price, color=diamonds$cut, type="box")
 ```
 
-## Boxplot of Price by color
+## Diamant price by color
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
+format(Sys.time(), "%a %b %d %X %Y")
 plot_ly(diamonds, y=diamonds$price, color=diamonds$color,type="box")
 ```
 
